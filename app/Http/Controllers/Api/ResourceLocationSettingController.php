@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ApiController;
+
+use App\ResourceLocation;
+
+class ResourceLocationSettingController extends ApiController
+{
+  public function index()
+  {
+    $generalAwsResourceUrlPrefix = ResourceLocation::generalAwsResourceUrlPrefix();
+    return response()->json(
+      [
+        'avatarImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'forumImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'tvVideoUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'tvImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'radioAudioUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'radioImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'boardImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'adImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+      ],
+      Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE
+    );
+  }
+}

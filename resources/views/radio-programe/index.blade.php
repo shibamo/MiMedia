@@ -1,0 +1,39 @@
+@extends('layouts.master')
+@section('content')
+  <h4>电台节目列表
+    {{link_to_action('RadioProgrameController@create', $title = '发布新节目', $parameters = [], $attributes = ['class'=>"btn btn-primary btn-sm"])}}
+  </h4> 
+  <div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#morningItems" aria-controls="morningItems" role="tab" data-toggle="tab">早安密西根</a>
+      </li>
+      <li role="presentation">
+        <a href="#livingItems" aria-controls="livingItems" role="tab" data-toggle="tab">密西根生活</a>
+      </li>
+      <li role="presentation">
+        <a href="#musicItems" aria-controls="musicItems" role="tab" data-toggle="tab">音乐台</a>
+      </li>
+      <li role="presentation">
+        <a href="#automanItems" aria-controls="automanItems" role="tab" data-toggle="tab">汽车人</a>
+      </li>      
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="morningItems"> 
+        @include('radio-programe._radio_programe_list', ['data' => $morningItems])
+      </div>
+      <div role="tabpanel" class="tab-pane" id="livingItems">         @include('radio-programe._radio_programe_list', ['data' => $livingItems])
+      </div>
+      <div role="tabpanel" class="tab-pane" id="musicItems"> 
+        @include('radio-programe._radio_programe_list', ['data' => $musicItems])
+      </div>
+      <div role="tabpanel" class="tab-pane" id="automanItems"> 
+        @include('radio-programe._radio_programe_list', ['data' => $automanItems])
+      </div>            
+    </div>
+
+  </div>  
+@endsection
