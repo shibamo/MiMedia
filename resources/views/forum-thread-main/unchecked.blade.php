@@ -4,6 +4,15 @@
   max-width: 480px;
 }
 </style>
+
+<script language="JavaScript"> 
+function autoRefresh() 
+{ 
+  window.location.reload(); 
+} 
+setTimeout('autoRefresh()',300000); //指定5分钟刷新一次 
+</script> 
+
 @section('content')
 <h4>待审核主贴列表 
   <span class="label label-danger" style="padding-right: .6em;padding-left: .6em; border-radius: 10rem;">
