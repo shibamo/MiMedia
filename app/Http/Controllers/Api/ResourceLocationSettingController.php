@@ -14,6 +14,8 @@ class ResourceLocationSettingController extends ApiController
   public function index()
   {
     $generalAwsResourceUrlPrefix = ResourceLocation::generalAwsResourceUrlPrefix();
+    $generalWebviewUrlPrefix = ResourceLocation::generalWebviewUrlPrefix();
+
     return response()->json(
       [
         'avatarImageUrlPrefix' => $generalAwsResourceUrlPrefix,
@@ -24,6 +26,7 @@ class ResourceLocationSettingController extends ApiController
         'radioImageUrlPrefix' => $generalAwsResourceUrlPrefix,
         'boardImageUrlPrefix' => $generalAwsResourceUrlPrefix,
         'adImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'generalWebviewUrlPrefix' => $generalWebviewUrlPrefix,
       ],
       Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE
     );

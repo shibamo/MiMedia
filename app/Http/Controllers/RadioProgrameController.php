@@ -78,6 +78,17 @@ class RadioProgrameController extends Controller
       ]);
   }
 
+  public function webview($id)
+  {
+    return view('radio-programe.webview',
+    [
+      'viewBag' => $this->viewBag,
+      'item'=>RadioPrograme::find($id), 
+      'currentFunction' => 'RadioPrograme',
+      'resourceUrlPrefix' => $this->generalAwsResourceUrlPrefix,
+      ]);
+  }
+
   public function edit($id)
   {
       //

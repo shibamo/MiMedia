@@ -1,4 +1,6 @@
 branch-defaults:
+  ? ''
+  : environment: dAsianMediaTest-env
   default:
     environment: dAsianMediaTest-env
 environment-defaults:

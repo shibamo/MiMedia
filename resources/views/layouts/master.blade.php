@@ -9,6 +9,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @yield('extend-style')
   </head>
   <body style="overflow-y:scroll;">
 

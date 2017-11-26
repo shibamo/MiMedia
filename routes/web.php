@@ -50,9 +50,13 @@ Route::get('/', function () {
 
 //电视节目管理
   Route::resource('TvPrograme', 'TvProgrameController');
+  //使用web页面查看电视节目(一般是微信导入)
+  Route::get('TvPrograme/webview/{id}', 'TvProgrameController@webview')->name('TvPrograme.webview'); 
 
 //电台节目管理
   Route::resource('RadioPrograme', 'RadioProgrameController');
+  //使用web页面查看电台节目(一般是微信导入)
+  Route::get('RadioPrograme/webview/{id}', 'RadioProgrameController@webview')->name('RadioPrograme.webview'); 
 
 //论坛管理
   // Route::post('Forum/destroyReply?{threadReplyid}', [ 
@@ -62,7 +66,24 @@ Route::get('/', function () {
   Route::get('Forum/unchecked', 'ForumThreadMainController@unchecked')->name('Forum.unchecked');
   Route::get('Forum/checkMain/{id}', 'ForumThreadMainController@checkMain')->name('Forum.checkMain');       
   Route::get('Forum/checkReply/{id}', 'ForumThreadMainController@checkReply')->name('Forum.checkReply');    
+  //使用web页面查看某个讨论线索(一般是微信导入)
+  Route::get('Forum/webview/{id}', 'ForumThreadMainController@webview')->name('Forum.webview');
   Route::resource('Forum', 'ForumThreadMainController');
+
+//论坛投诉管理
+  //待处理列表
+  Route::get('ForumComplain/unProcessed', 'ForumThreadComplainController@unProcessed')->name('ForumComplain.unProcessed');
+  //删除
+  Route::delete('ForumComplain/destroyMain/{complainId}', 'ForumThreadComplainController@destroyMain')->name('ForumComplain.destroyMain');
+  Route::delete('ForumComplain/destroyReply/{complainId}', 'ForumThreadComplainController@destroyReply')->name('ForumComplain.destroyReply'); 
+  //查看
+  Route::get('ForumComplain/showMain/{id}', 'ForumThreadComplainController@showMain')->name('ForumComplain.showMain');       
+  Route::get('ForumComplain/showReply/{id}', 'ForumThreadComplainController@showReply')->name('ForumComplain.showReply');
+  //审查处理意见    
+  Route::put('ForumComplain/processMain/{id}', 'ForumThreadComplainController@processMain')->name('ForumComplain.processMain');       
+  Route::put('ForumComplain/processReply/{id}', 'ForumThreadComplainController@processReply')->name('ForumComplain.processReply');
+  //其他操作 
+  // Route::resource('ForumComplain', 'ForumThreadComplainController',['only' => ['index', 'update','destroy']]);
 
 //广告图片管理
   Route::resource('AdSetting', 'AdSettingController');

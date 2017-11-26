@@ -106,6 +106,17 @@ class TvProgrameController extends Controller
     ]);
   }
 
+  public function webview($id)
+  {
+    return view('tv-programe.webview',
+    [
+      'viewBag' => $this->viewBag,
+      'item'=>TvPrograme::find($id), 
+      'currentFunction' => 'TvPrograme',
+      'resourceUrlPrefix' => $this->generalAwsResourceUrlPrefix,
+    ]);
+  }
+
   /**
     * Show the form for editing the specified resource.
     *

@@ -35,6 +35,9 @@
           <li class="{{ $currentFunction=='Forum' ? 'active' : ''}}">
             <a href="/Forum">论坛列表</a>
           </li> 
+          <li class="{{ $currentFunction=='Forum.Complain' ? 'active' : ''}}">
+           {{link_to_action('ForumThreadComplainController@unProcessed', $title = '待处理投诉列表')}}
+          </li>           
         </ul>
       </li>
     @endif

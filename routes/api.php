@@ -30,6 +30,17 @@ Route::group(['middleware' => 'jwt.auth'], function()
     'as' => 'replyThread'
   ]);
 
+  Route::post('forum-thread/complainThread', [
+    'uses' => 'Api\ForumComplainController@complainThread',
+    'as' => 'complainThread'
+  ]);
+
+  Route::post('forum-thread/complainReply', [
+    'uses' => 'Api\ForumComplainController@complainReply',
+    'as' => 'complainReply'
+  ]);  
+
+
   Route::post('user/setAvatar', [
     'uses' => 'Api\UserController@setAvatar',
     'as' => 'setAvatar'
@@ -89,6 +100,9 @@ Route::group(['middleware' => 'jwt.auth'], function()
     'as' => 'forum-boards'
   ]);
 #endregion
+
+
+
 
 #region 广告
   Route::get('ad-setting/index', [

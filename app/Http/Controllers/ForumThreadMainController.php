@@ -34,6 +34,18 @@ class ForumThreadMainController extends Controller
     ]);
   }
 
+  public function webview($id)
+  {
+    $item = ForumThreadMain::find($id)->dto();
+    return view('forum-thread-main.webview',[
+      'viewBag' => $this->viewBag,
+      'main'=>$item,
+      'board'=>ForumThreadMain::find($id)->forumBoard, 
+      'currentFunction' => 'Forum',
+      'replies' => $item['replies'],
+    ]);
+  }
+
   public function create()
   {
       //
@@ -94,7 +106,7 @@ class ForumThreadMainController extends Controller
 
   public function destroyReply($threadReplyid)
   {
-    $threadMainid = ForumThreadReply::find($threadReplyid)->forumThreadId;
+    // $threadMainid = ForumThreadReply::find($threadReplyid)->forumThreadId;
     ForumThreadReply::destroy($threadReplyid);
     return redirect()->back();
   }  

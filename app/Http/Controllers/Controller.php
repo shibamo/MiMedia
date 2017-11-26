@@ -35,7 +35,8 @@ class Controller extends BaseController
 	public function __construct(Request $request){
     $this->generalAwsResourceUrlPrefix = ResourceLocation::generalAwsResourceUrlPrefix();
 
-    if(stristr($request->path(),'login') == FALSE){
+    if(stristr($request->path(),'/login') == FALSE && 
+    stristr($request->path(),'/webview/') == FALSE){
       // 需要使用middleware,否则在__construct取不到用户验证信息和session, 参考自 https://github.com/laravel/framework/issues/15072, https://github.com/laravel/docs/blob/5.3/upgrade.md#session-in-the-constructor
       //https://stackoverflow.com/questions/42267376/how-to-access-session-in-construct
       $self = $this;
