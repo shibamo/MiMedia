@@ -16,10 +16,13 @@ use App\ForumThreadReply;
 
 class ForumThreadController extends ApiController
 {
-  public function index(int $forumBoardId)
+  public function index(int $forumBoardId, int $page = 1)
   {
     $grouped = ForumBoard::find($forumBoardId)->forumThreadMains()
-    ->where('isPublished', 1)->orderBy('created_at', 'desc')->take(200)->get()->map(
+    ->where('isPublished', 1)->orderBy('created_at', 'desc')
+    ->skip($this->recordCountPerPage * ($page-1)) // 跳过本页以前的数据集
+    ->take($this->recordCountPerPage) // 取当前页的数据集
+    ->get()->map(
         function($item){
           return $item->dto();
       });

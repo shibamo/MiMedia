@@ -90,7 +90,7 @@ Route::group(['middleware' => 'jwt.auth'], function()
 #endregion
 
 #region 论坛管理
-  Route::get('forum-thread/index/{forumBoardId}', [
+  Route::get('forum-thread/index/{forumBoardId}/{page?}', [
     'uses' => 'Api\ForumThreadController@index',
     'as' => 'forum-threads'
   ]);
