@@ -11,6 +11,11 @@
 |
 */
 
+// https://laracasts.com/discuss/channels/laravel/how-i-can-force-all-my-routes-to-be-https-not-http?page=1
+if (env('APP_ENV') === 'aws_production' || env('APP_ENV') === 'aws_test') {
+  URL::forceScheme('https');
+}
+
 Route::get('/', function () {
   //return view('welcome');
   return redirect()->action('UserController@profile');
