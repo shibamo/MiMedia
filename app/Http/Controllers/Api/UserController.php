@@ -15,6 +15,7 @@ use App\ResourceLocation;
 
 class UserController extends ApiController
 {
+  const maxFailCount = 5; //失败次数上限
   protected $avatarImagesSubFolderName = 'avatar';
 
   public function index()
@@ -85,13 +86,17 @@ class UserController extends ApiController
 
   public function register(Request $request)
   {
-    $credentials = $request->only('email', 'name', 'password','guid');
+    $credentials = $request->only('email', 'name', 'password','question','answer');
     $credentials['password'] = bcrypt($credentials['password']);
     $credentials['guid'] = UUID::generate()->string;
     $credentials['avatar'] = 'avatar/avatar.png';
 
     if(User::where('email', $credentials['email'])->count()){
       return $this->generateErrorObjectToFront('Email邮箱账户已存在');
+    }
+
+    if(empty($credentials['question']) || empty($credentials['question'])){
+      return $this->generateErrorObjectToFront('问题和回答都不能为空');
     }
 
     $user = User::create($credentials);
@@ -111,6 +116,7 @@ class UserController extends ApiController
     }
   }
 
+  // 使用邮件地址和旧密码来更新密码, 需要是用户在已经登录状态下
   public function changePassword(Request $request)
   {
     $user = JWTAuth::parseToken()->authenticate(); //需要是用户在已经登录状态下
@@ -125,6 +131,39 @@ class UserController extends ApiController
       return $this->generateUserObjectToFront($user);
     } else {
       return $this->generateErrorObjectToFront('Email邮箱账户或原密码错误');
+    }
+  }
+
+  // 使用邮件地址获取密码问题, 不需要用户在已经登录状态下
+  public function getQuestionFromEmail(Request $request){
+    $email = $request->email;
+
+    if(User::where('email', $email)->count()){
+      $user = User::where('email', $email)->first();
+      return response()->json(
+        [
+          "question" => $user->question,
+        ], 
+        Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
+    }else {
+      return $this->generateErrorObjectToFront('该Email对应的账户不存在');
+    }
+  }
+
+  // 使用邮件地址和密码答案来更新密码, 不需要用户在已经登录状态下
+  public function resetPassword(Request $request)
+  {
+    $email = $request->email;
+    $answer = $request->answer;
+    $newPassword = $request->newPassword;
+
+    if(User::where('email', $email)->where('answer',$answer)->count()){
+      $user = User::where('email', $email)->first();
+      $user->password = bcrypt($newPassword);
+      $user->save();
+      return $this->generateUserObjectToFront($user);
+    }else {
+      return $this->generateErrorObjectToFront('Email邮箱账户或答案错误');
     }
   }
 

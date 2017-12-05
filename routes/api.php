@@ -63,6 +63,16 @@ Route::group(['middleware' => 'jwt.auth'], function()
     'uses' => 'Api\UserController@register',
     'as' => 'register'
   ]);
+
+  Route::post('user/getQuestionFromEmail', [
+    'uses' => 'Api\UserController@getQuestionFromEmail',
+    'as' => 'getQuestionFromEmail'
+  ]);
+  
+  Route::post('user/resetPassword', [
+    'uses' => 'Api\UserController@resetPassword',
+    'as' => 'resetPassword'
+  ]);
 #endregion
 
 #region 电视节目管理

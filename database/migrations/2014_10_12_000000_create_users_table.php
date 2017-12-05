@@ -11,9 +11,15 @@ class CreateUsersTable extends Migration
     Schema::create('users', function (Blueprint $table) {
       $table->increments('id');
       $table->string('guid');
-      $table->string('name');
-      $table->string('email',100)->unique();
-      $table->string('password');
+      $table->string('name', 256);
+      $table->string('email', 128)->unique();
+      $table->string('password', 256);
+      $table->bigInteger('loginFailCount')->default(0); //登录失败次数
+      $table->dateTime('loginFailLockEndDateTime')->nullable(); //登录失败被封锁登录的结束时间
+      $table->string('question', 256); //重置密码的问题
+      $table->string('answer', 256); //重置密码的答案
+      $table->bigInteger('resetFailCount')->default(0); //重置密码失败次数
+      $table->dateTime('resetFailLockEndDateTime')->nullable();//重置密码被封锁重置的结束时间
       $table->string('avatar')->default('avatar/avatar.png');
       $table->boolean('isSystemManager')->default(false);//是否系统管理员
       $table->boolean('isAuditor')->default(false);//是否审核人员
