@@ -87,6 +87,7 @@ class UserController extends ApiController
   public function register(Request $request)
   {
     $credentials = $request->only('email', 'name', 'password','question','answer');
+    $credentials['email'] = strtolower($credentials['email']);
     $credentials['password'] = bcrypt($credentials['password']);
     $credentials['guid'] = UUID::generate()->string;
     $credentials['avatar'] = 'avatar/avatar.png';
@@ -106,7 +107,7 @@ class UserController extends ApiController
 
   public function login(Request $request)
   {
-    if (Auth::attempt(['email' => $request->email, 
+    if (Auth::attempt(['email' => strtolower($request->email), 
         'password' => $request->password])) 
     {
       $user = Auth::user();
@@ -125,7 +126,7 @@ class UserController extends ApiController
     $newPassword = $request->newPassword;
 
     //还是需要先验证用户输入的旧密码
-    if (Auth::attempt(['email' => $user->email, 'password' => $oldPassword])) {
+    if (Auth::attempt(['email' => strtolower($user->email), 'password' => $oldPassword])) {
       $user->password = bcrypt($newPassword);
       $user->save();
       return $this->generateUserObjectToFront($user);
@@ -136,7 +137,7 @@ class UserController extends ApiController
 
   // 使用邮件地址获取密码问题, 不需要用户在已经登录状态下
   public function getQuestionFromEmail(Request $request){
-    $email = $request->email;
+    $email = strtolower($request->email);
 
     if(User::where('email', $email)->count()){
       $user = User::where('email', $email)->first();
@@ -153,7 +154,7 @@ class UserController extends ApiController
   // 使用邮件地址和密码答案来更新密码, 不需要用户在已经登录状态下
   public function resetPassword(Request $request)
   {
-    $email = $request->email;
+    $email = strtolower($request->email);
     $answer = $request->answer;
     $newPassword = $request->newPassword;
 
