@@ -92,6 +92,10 @@ class UserController extends ApiController
     $credentials['guid'] = UUID::generate()->string;
     $credentials['avatar'] = 'avatar/avatar.png';
 
+    if(User::where('name', $credentials['name'])->count()){
+      return $this->generateErrorObjectToFront('该用户名已存在');
+    }
+
     if(User::where('email', $credentials['email'])->count()){
       return $this->generateErrorObjectToFront('Email邮箱账户已存在');
     }
