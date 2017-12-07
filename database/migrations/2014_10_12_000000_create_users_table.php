@@ -8,10 +8,12 @@ class CreateUsersTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('users');
+    
     Schema::create('users', function (Blueprint $table) {
       $table->increments('id');
       $table->string('guid');
-      $table->string('name', 256);
+      $table->string('name', 128)->unique();
       $table->string('email', 128)->unique();
       $table->string('password', 256);
       $table->bigInteger('loginFailCount')->default(0); //登录失败次数
@@ -28,8 +30,13 @@ class CreateUsersTable extends Migration
       $table->boolean('isADClient')->default(false);//是否广告客户
       $table->boolean('isLocked')->default(false);//是否被关小黑屋的用户       
       $table->boolean('isVerified')->default(false);//用户信息是否已验证(目前主要是邮箱) 
+
       $table->rememberToken();
       $table->timestamps();
+
+      $table->index('name');
+      $table->index('email');
+      
     });
 
     DB::update("ALTER TABLE users AUTO_INCREMENT = 5000;");

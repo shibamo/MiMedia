@@ -8,6 +8,8 @@ class CreateRadioChannelsTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('radio_channels');
+    
     Schema::create('radio_channels', function (Blueprint $table) {
       $table->increments('id');
       $table->string('name');
@@ -24,6 +26,6 @@ class CreateRadioChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('radio_channels');
+      Schema::dropIfExists('radio_channels');
     }
 }

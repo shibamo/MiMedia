@@ -8,6 +8,8 @@ class CreateRadioProgramesTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('radio_programes');
+    
     Schema::create('radio_programes', function (Blueprint $table) {
       $table->increments('id');
       $table->bigInteger('radioChannelId');
@@ -23,7 +25,7 @@ class CreateRadioProgramesTable extends Migration
       $table->boolean('isChecked')->default(false); 
       $table->boolean('isPublished')->default(false);      
       $table->timestamps();
-      $table->softDeletes();            
+      $table->softDeletes();
     });
   }
 

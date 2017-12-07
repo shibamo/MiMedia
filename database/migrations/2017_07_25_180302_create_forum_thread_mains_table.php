@@ -8,6 +8,8 @@ class CreateForumThreadMainsTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('forum_thread_mains');
+    
     Schema::create('forum_thread_mains', function (Blueprint $table) {
       $table->increments('id');
 
@@ -20,9 +22,15 @@ class CreateForumThreadMainsTable extends Migration
       $table->bigInteger('likedTimes')->nullable();
       $table->boolean('isChecked')->default(false)->index(); 
       $table->boolean('isPublished')->default(false);
+      $table->dateTime('lastActivityTime')->nullable(); 
 
       $table->timestamps();
       $table->softDeletes();        
+
+      $table->index(['forumBoardId','created_at']);
+      $table->index(['forumBoardId','isChecked']);
+      $table->index(['forumBoardId','lastActivityTime']);
+      $table->index('authorId');
     });
   }
 

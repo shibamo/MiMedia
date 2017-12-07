@@ -8,6 +8,8 @@ class CreateForumBoardsTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('forum_boards');
+    
     Schema::create('forum_boards', function (Blueprint $table) {
       $table->increments('id');
       $table->string('name');

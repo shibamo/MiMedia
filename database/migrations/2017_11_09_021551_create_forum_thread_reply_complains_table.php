@@ -13,6 +13,8 @@ class CreateForumThreadReplyComplainsTable extends Migration
     */
   public function up()
   {
+    Schema::dropIfExists('forum_thread_reply_complains');
+    
     Schema::create('forum_thread_reply_complains', function (Blueprint $table) {
       $table->increments('id');
 

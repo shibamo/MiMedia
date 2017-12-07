@@ -8,6 +8,8 @@ class CreateTvProgramesTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('tv_programes');
+    
     Schema::create('tv_programes', function (Blueprint $table) {
       $table->increments('id');
       $table->bigInteger('tvChannelId');
@@ -29,6 +31,6 @@ class CreateTvProgramesTable extends Migration
 
   public function down()
   {
-      Schema::dropIfExists('tv_programes');
+    Schema::dropIfExists('tv_programes');
   }
 }

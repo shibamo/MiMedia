@@ -8,6 +8,8 @@ class CreateAdSettingsTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('ad_settings');
+    
     Schema::create('ad_settings', function (Blueprint $table) {
       $table->increments('id');
       $table->string('name');

@@ -8,6 +8,8 @@ class CreateForumThreadRepliesTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('forum_thread_replies');
+    
     Schema::create('forum_thread_replies', function (Blueprint $table) {
       $table->increments('id');
       
@@ -22,6 +24,10 @@ class CreateForumThreadRepliesTable extends Migration
 
       $table->timestamps();
       $table->softDeletes();
+
+      $table->index(['forumBoardId','forumThreadId']);
+      $table->index(['forumBoardId','isChecked']);
+      $table->index('authorId');
     });
   }
 

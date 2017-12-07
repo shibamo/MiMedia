@@ -8,6 +8,8 @@ class CreateForumFilesTable extends Migration
 {
   public function up()
   {
+    Schema::dropIfExists('forum_files');
+    
     Schema::create('forum_files', function (Blueprint $table) {
       $table->increments('id');
       $table->bigInteger('forumThreadMainId')->nullable();
