@@ -5,6 +5,7 @@
 /vendor
 /.idea
 /.vagrant
+/database/seeds/UsersTableSeeder.php
 Homestead.json
 Homestead.yaml
 npm-debug.log
