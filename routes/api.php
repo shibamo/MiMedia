@@ -128,6 +128,13 @@ Route::group(['middleware' => 'jwt.auth'], function()
   ]);
 #endregion
 
+#region 用户操作访问收集,估计数据发生频繁,因此尽量缩短url
+Route::post('cv/a', [
+  'uses' => 'Api\ContentVisitController@add',
+  'as' => 'addContentVisit'
+]);
+#endregion
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
