@@ -1,14 +1,14 @@
 branch-defaults:
   ? ''
-  : environment: dAsianMediaTest-env
+  : environment: DAsianMediaProd-env-1
   default:
-    environment: dAsianMediaTest-env
+    environment: DAsianMediaProd-env-1
 environment-defaults:
-  dAsianMediaTest-env:
+  DAsianMediaProd-env-1:
     branch: null
     repository: null
 global:
-  application_name: D Asian Media Test
+  application_name: D Asian Media Prod
   default_ec2_keyname: ec2-key-pair
   default_platform: arn:aws:elasticbeanstalk:us-east-2::platform/PHP 7.0 running on
     64bit Amazon Linux/2.4.4
