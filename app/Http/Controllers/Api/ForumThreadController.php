@@ -40,8 +40,8 @@ class ForumThreadController extends ApiController
       $this->generateImageSectionContent($sections);
     $thread['guid'] = UUID::generate()->string;
     $thread['authorId'] = $user->id;
-    $thread['isChecked'] = false;
-    $thread['isPublished'] = false;
+    $thread['isChecked'] = true;
+    $thread['isPublished'] = true;
 
     return response()->json(ForumThreadMain::create($thread), 
       Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);    
@@ -65,8 +65,8 @@ class ForumThreadController extends ApiController
     $thread['forumBoardId'] = ForumThreadMain::find($request->forumThreadId)->id;
     $thread['guid'] = UUID::generate()->string;
     $thread['authorId'] = $user->id;
-    $thread['isChecked'] = false;
-    $thread['isPublished'] = false;
+    $thread['isChecked'] = true;
+    $thread['isPublished'] = true;
 
     return response()->json(ForumThreadReply::create($thread),
       Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
