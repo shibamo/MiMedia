@@ -6,31 +6,31 @@
   <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
+      <li role="presentation" class="{{ $viewBag['currentChannel']==1 ? 'active' : ''}}">
         <a href="#morningItems" aria-controls="morningItems" role="tab" data-toggle="tab">早安密西根</a>
       </li>
-      <li role="presentation">
+      <li role="presentation"  class="{{ $viewBag['currentChannel']==2 ? 'active' : ''}}">
         <a href="#livingItems" aria-controls="livingItems" role="tab" data-toggle="tab">密西根生活</a>
       </li>
-      <li role="presentation">
+      <li role="presentation"  class="{{ $viewBag['currentChannel']==3 ? 'active' : ''}}">
         <a href="#musicItems" aria-controls="musicItems" role="tab" data-toggle="tab">音乐台</a>
       </li>
-      <li role="presentation">
+      <li role="presentation"  class="{{ $viewBag['currentChannel']==4 ? 'active' : ''}}">
         <a href="#automanItems" aria-controls="automanItems" role="tab" data-toggle="tab">汽车人</a>
       </li>      
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="morningItems"> 
+      <div role="tabpanel" class="tab-pane {{ $viewBag['currentChannel']==1 ? 'active' : ''}}" id="morningItems"> 
         @include('radio-programe._radio_programe_list', ['data' => $morningItems])
       </div>
-      <div role="tabpanel" class="tab-pane" id="livingItems">         @include('radio-programe._radio_programe_list', ['data' => $livingItems])
+      <div role="tabpanel" class="tab-pane {{ $viewBag['currentChannel']==2 ? 'active' : ''}}" id="livingItems">         @include('radio-programe._radio_programe_list', ['data' => $livingItems])
       </div>
-      <div role="tabpanel" class="tab-pane" id="musicItems"> 
+      <div role="tabpanel" class="tab-pane {{ $viewBag['currentChannel']==3 ? 'active' : ''}}" id="musicItems"> 
         @include('radio-programe._radio_programe_list', ['data' => $musicItems])
       </div>
-      <div role="tabpanel" class="tab-pane" id="automanItems"> 
+      <div role="tabpanel" class="tab-pane {{ $viewBag['currentChannel']==4 ? 'active' : ''}}" id="automanItems"> 
         @include('radio-programe._radio_programe_list', ['data' => $automanItems])
       </div>            
     </div>

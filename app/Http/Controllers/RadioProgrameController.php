@@ -12,18 +12,26 @@ use App\ResourceLocation;
 
 class RadioProgrameController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
+    // 当前显示的频道
+    if ($request->session()->has('currentChannel')) {
+      $this->viewBag['currentChannel'] = $request->session()->get('currentChannel', 1);
+      ;
+    }else{
+      $this->viewBag['currentChannel'] = 1;
+    }
+
     return view('radio-programe.index',[
       'viewBag' => $this->viewBag,
       'morningItems' => RadioPrograme::fromChannelName('morningItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'livingItems' => RadioPrograme::fromChannelName('livingItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'musicItems' => RadioPrograme::fromChannelName('musicItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'automanItems' => RadioPrograme::fromChannelName('automanItems')
-        ->sortByDesc('date'),        
+        ->sortByDesc('date')->take($this->recordCountPerPage),        
       'currentFunction' => 'RadioPrograme',
     ]);
   }
@@ -64,11 +72,17 @@ class RadioProgrameController extends Controller
       "isPublished" => true,
     ]);
 
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', $request->radioChannelId);
+
     return redirect()->action('RadioProgrameController@index');
   }
 
-  public function show($id)
+  public function show(Request $request, $id)
   {
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', RadioPrograme::find($id)->radioChannel->id);
+
     return view('radio-programe.show',
     [
       'viewBag' => $this->viewBag,
@@ -99,8 +113,11 @@ class RadioProgrameController extends Controller
       //
   }
 
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', RadioPrograme::find($id)->radioChannel->id);
+
     RadioPrograme::destroy($id);
     return redirect()->action('RadioProgrameController@index');
   }

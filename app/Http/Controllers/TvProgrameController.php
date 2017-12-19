@@ -17,16 +17,24 @@ class TvProgrameController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-  public function index()
+  public function index(Request $request)
   {
+    // 当前显示的频道
+    if ($request->session()->has('currentChannel')) {
+      $this->viewBag['currentChannel'] = $request->session()->get('currentChannel', 1);
+      ;
+    }else{
+      $this->viewBag['currentChannel'] = 1;
+    }
+
     return view('tv-programe.index',[
       'viewBag' => $this->viewBag,
       'newsItems' => TvPrograme::fromChannelName('newsItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'entertainItems' => TvPrograme::fromChannelName('entertainItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'automanItems' => TvPrograme::fromChannelName('automanItems')
-        ->sortByDesc('date'),
+        ->sortByDesc('date')->take($this->recordCountPerPage),
       'currentFunction' => 'TvPrograme',
       'resourceUrlPrefix' => $this->generalAwsResourceUrlPrefix,
     ]);
@@ -58,7 +66,7 @@ class TvProgrameController extends Controller
       // $tvFile->move(public_path(). '/' . $this->tvSubFolderName, $newTvFileName);
     #endregion
 
-    #region 保存到S3
+    #region 视频保存到S3
       Storage::disk('s3')->putFileAs($this->tvSubFolderName, $tvFile, $newTvFileName, 'public');
     #endregion
 
@@ -69,7 +77,7 @@ class TvProgrameController extends Controller
       //$imageFile->move(public_path(). '/' . $this->coverImagesSubFolderName,$newImageFileName);
     #endregion
 
-    #region 保存到S3
+    #region 封面图片保存到S3
       Storage::disk('s3')->putFileAs($this->coverImagesSubFolderName, $imageFile, $newImageFileName, 'public');
     #endregion
 
@@ -87,6 +95,9 @@ class TvProgrameController extends Controller
       "isPublished" => true,
     ]);
 
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', $request->tvChannelId);
+
     return redirect()->action('TvProgrameController@index');
   }
 
@@ -96,8 +107,11 @@ class TvProgrameController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-  public function show($id)
+  public function show(Request $request, $id)
   {
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', TvPrograme::find($id)->tvChannel->id);
+
     return view('tv-programe.show',
     ['viewBag' => $this->viewBag,
     'item'=>TvPrograme::find($id), 
@@ -146,8 +160,11 @@ class TvProgrameController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-  public function destroy($id)
+  public function destroy(Request $request,$id)
   {
+    // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
+    $request->session()->flash('currentChannel', TvPrograme::find($id)->tvChannel->id);
+    
     TvPrograme::destroy($id);
     return redirect()->action('TvProgrameController@index');
   }
