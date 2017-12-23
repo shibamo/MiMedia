@@ -43,14 +43,15 @@ class ForumFileController extends ApiController
         $content = new File($newImageFileName);
       }
       #region 保存到S3
-        Storage::disk('s3')->putFileAs($this->forumImagesSubFolderName, $content, $newImageFileName, 'public');
+        $subPath = $this->forumImagesSubFolderName . "/" . date("Ymd");
+        Storage::disk('s3')->putFileAs($subPath, $content, $newImageFileName, 'public');
         //https://laracasts.com/discuss/channels/laravel/delete-uploaded-file-from-public-dir
         if($needDeleteTempFile) unlink(public_path($newImageFileName)); 
       #endregion
 
       return response()->json(
         [
-          "link" => ResourceLocation::generalAwsResourceUrlPrefix() . $this->forumImagesSubFolderName . "/" . $newImageFileName,
+          "link" => ResourceLocation::generalAwsResourceUrlPrefix() . $subPath . "/" . $newImageFileName,
         ], 
         Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
 
