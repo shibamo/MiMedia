@@ -76,4 +76,30 @@ class ForumThreadController extends ApiController
     return response()->json(ForumBoard::all(),
     Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
   }
+
+  public function deleteMyThread(Request $request)
+  {
+    $user = JWTAuth::parseToken()->authenticate();
+
+    $thread = ForumThreadMain::find($request->forumThreadId);
+    if($user->id == $thread->authorId){
+      ForumThreadMain::destroy($request->forumThreadId);
+    }
+
+    return response()->json(null, 
+      Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
+  }
+
+  public function deleteMyReply(Request $request)
+  {
+    $user = JWTAuth::parseToken()->authenticate();
+
+    $reply = ForumThreadReply::find($request->threadReplyId);
+    if($user->id == $reply->authorId){
+      ForumThreadReply::destroy($request->threadReplyId);
+    }
+
+    return response()->json(null, 
+      Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
+  }
 }
