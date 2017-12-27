@@ -40,12 +40,12 @@ Route::group(['middleware' => 'jwt.auth'], function()
     'as' => 'complainReply'
   ]);  
 
-  Route::delete('forum-thread/deleteMyReply', [
+  Route::post('forum-thread/deleteMyReply', [
     'uses' => 'Api\ForumThreadController@deleteMyReply',
     'as' => 'deleteMyReply'
   ]);
 
-  Route::delete('forum-thread/deleteMyThread', [
+  Route::post('forum-thread/deleteMyThread', [
     'uses' => 'Api\ForumThreadController@deleteMyThread',
     'as' => 'deleteMyThread'
   ]);

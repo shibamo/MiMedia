@@ -79,27 +79,36 @@ class ForumThreadController extends ApiController
 
   public function deleteMyThread(Request $request)
   {
-    $user = JWTAuth::parseToken()->authenticate();
+    $result = null;
 
+    $user = JWTAuth::parseToken()->authenticate();
     $thread = ForumThreadMain::find($request->forumThreadId);
     if($user->id == $thread->authorId){
       ForumThreadMain::destroy($request->forumThreadId);
+      $result = ["status" => "success"];
+    } else{
+      $result = ["status" => "fail"];
     }
 
-    return response()->json(null, 
+    return response()->json($result, 
       Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
   }
 
   public function deleteMyReply(Request $request)
   {
+    $result = null;
+
     $user = JWTAuth::parseToken()->authenticate();
 
     $reply = ForumThreadReply::find($request->threadReplyId);
     if($user->id == $reply->authorId){
       ForumThreadReply::destroy($request->threadReplyId);
+      $result = ["status" => "success"];
+    } else{
+      $result = ["status" => "fail"];
     }
 
-    return response()->json(null, 
+    return response()->json($result, 
       Response::HTTP_OK, $this->jsonHeader, JSON_UNESCAPED_UNICODE);
   }
 }
