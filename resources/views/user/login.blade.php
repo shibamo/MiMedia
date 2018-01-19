@@ -10,13 +10,13 @@
         </div>
         @endif
         <div class="panel panel-default">
-          <div class="panel-heading">登录系统</div>
+          <div class="panel-heading">登录系统/Log In</div>
           <div class="panel-body">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('doLogin') }}">
               {{ csrf_field() }}
 
               <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                <label for="email" class="col-md-4 control-label">输入邮箱</label>
+                <label for="email" class="col-md-4 control-label">输入邮箱/Email</label>
 
                 <div class="col-md-6">
                   <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required
@@ -31,7 +31,7 @@
               </div>
 
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                <label for="password" class="col-md-4 control-label">输入密码</label>
+                <label for="password" class="col-md-4 control-label">输入密码/Password</label>
 
                 <div class="col-md-6">
                   <input id="password" type="password" class="form-control" name="password" autocomplete = 'new-password' required>
@@ -48,7 +48,7 @@
                 <div class="col-md-6 col-md-offset-4">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> 保持登录
+                      <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> 保持登录/Keep login
                     </label>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
               <div class="form-group">
                 <div class="col-md-8 col-md-offset-4">
                   <button type="submit" class="btn btn-primary">
-                    登录
+                    登录 / Login
                   </button>
                 </div>
               </div>
