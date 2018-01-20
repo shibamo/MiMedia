@@ -1,19 +1,19 @@
 @extends('layouts.master')
 @section('content')
-  <h4>电视节目列表
-    {{link_to_action('TvProgrameController@create', $title = '新建', $parameters = [], $attributes = ['class'=>"btn btn-primary btn-sm"])}}
+  <h4>电视节目列表 / TV Program List
+    {{link_to_action('TvProgrameController@create', $title = 'Create', $parameters = [], $attributes = ['class'=>"btn btn-primary btn-sm"])}}
   </h4> 
   <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="{{ $viewBag['currentChannel']==1 ? 'active' : ''}}">
-        <a href="#newsItems" aria-controls="newsItems" role="tab" data-toggle="tab">新闻</a>
+        <a href="#newsItems" aria-controls="newsItems" role="tab" data-toggle="tab">新闻/News</a>
       </li>
       <li role="presentation"  class="{{ $viewBag['currentChannel']==2 ? 'active' : ''}}">
-        <a href="#entertainItems" aria-controls="entertainItems" role="tab" data-toggle="tab">娱乐</a>
+        <a href="#entertainItems" aria-controls="entertainItems" role="tab" data-toggle="tab">娱乐/Entertainment</a>
       </li>
       <li role="presentation"  class="{{ $viewBag['currentChannel']==3 ? 'active' : ''}}">
-        <a href="#automanItems" aria-controls="automanItems" role="tab" data-toggle="tab">汽车人</a>
+        <a href="#automanItems" aria-controls="automanItems" role="tab" data-toggle="tab">汽车人/Auto Man</a>
       </li>
     </ul>
 

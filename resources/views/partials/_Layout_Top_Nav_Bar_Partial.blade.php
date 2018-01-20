@@ -15,19 +15,19 @@
   <ul class="nav navbar-nav">
     @if($viewBag['currentUser']->canUseFunction('tv'))
       <li class="{{ $currentFunction=='TvPrograme' ? 'active' : ''}}">
-        <a href="/TvPrograme">电视节目</a>
+        <a href="/TvPrograme">电视节目/TV</a>
       </li>
     @endif
 
     @if($viewBag['currentUser']->canUseFunction('radio'))
       <li class="{{ $currentFunction=='RadioPrograme' ? 'active' : ''}}">
-        <a href="/RadioPrograme">电台节目</a>
+        <a href="/RadioPrograme">电台节目/Radio</a>
       </li>
     @endif
 
     @if($viewBag['currentUser']->canUseFunction('forum'))
       <li class="dropdown {{ substr($currentFunction, 0, strlen('Forum'))=='Forum' ? 'active' : ''}}">
-        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >论坛管理 <span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >论坛管理/Forum <span class="caret"></span></a>
         <ul class="dropdown-menu">    
           <li class="{{ $currentFunction=='Forum.Check' ? 'active' : ''}}">
             {{link_to_action('ForumThreadMainController@unchecked', $title = '待审核列表')}}
@@ -44,11 +44,11 @@
 
     @if($viewBag['currentUser']->canUseFunction('ad'))
       <li class="{{ $currentFunction=='AdSetting' ? 'active' : ''}}">
-        <a href="/AdSetting">广告设置</a>
+        <a href="/AdSetting">广告设置/Ads</a>
       </li>
     @endif
 
-    <li><a href="#">统计数据(暂无)</a></li>
+    <li><a href="#">统计数据(暂无)/Stat(N/A)</a></li>
 
     @if($viewBag['currentUser']->canUseFunction('manage'))
       <li class="dropdown {{ substr($currentFunction, 0, strlen('User'))=='User' ? 'active' : ''}}">
@@ -72,8 +72,8 @@
     <li class="dropdown {{ $currentFunction=='Profile' ? 'active' : ''}}">
       <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" > 账户({{$viewBag['currentUser']->name}}) <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="/User/logout">退出登录</a></li>
-        <li class="{{ $currentFunction=='Profile' ? 'active' : ''}}"><a href="/User/profile">个人设置</a></li>
+        <li><a href="/User/logout">退出登录/Logout</a></li>
+        <li class="{{ $currentFunction=='Profile' ? 'active' : ''}}"><a href="/User/profile">个人设置/Settings</a></li>
       </ul>
     </li>
   </ul>

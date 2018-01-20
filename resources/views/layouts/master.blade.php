@@ -30,7 +30,7 @@
           <hr />
           <footer>
             <p class="text-center">
-              &copy; {{ Carbon\Carbon::now()->year }} - D*亚洲传媒 | 技术问题请联系: <span class='text-danger'>qinchao@hotmail.com</span> <span class='text-info'> 微信号: shbamo</span>
+              &copy; {{ Carbon\Carbon::now()->year }} - D*亚洲传媒 | 技术问题请联系/Tech contact: <span class='text-danger'>qinchao@hotmail.com</span> <span class='text-info'> 微信号/Wechat: shbamo</span>
             </p>
           </footer>
         </div>
