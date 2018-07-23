@@ -58,21 +58,31 @@ class TvProgrameController extends Controller
     */
   public function store(Request $request)
   {
-    // 视频上传保存
-    $tvFile = $request->file('tv');
-    $newTvFileName = UUID::generate()->string . '.' . $tvFile->extension();
+    $url = "";
 
-    #region 保存到本地
-      // $tvFile->move(public_path(). '/' . $this->tvSubFolderName, $newTvFileName);
-    #endregion
+    if(isset($request->youtubeLink) && $this->isYoutubeLink($request->youtubeLink))
+    {
+      $url = $request->youtubeLink;
+    }
+    elseif($request->hasFile('tv')) // 视频上传保存
+    {
+      $tvFile = $request->file('tv');
+      $newTvFileName = UUID::generate()->string . '.' . $tvFile->getClientOriginalExtension();
 
-    #region 视频保存到S3
-      Storage::disk('s3')->putFileAs($this->tvSubFolderName, $tvFile, $newTvFileName, 'public');
-    #endregion
+      #region 保存到本地
+        // $tvFile->move(public_path(). '/' . $this->tvSubFolderName, $newTvFileName);
+      #endregion
 
+      #region 视频保存到S3
+        Storage::disk('s3')->putFileAs($this->tvSubFolderName, $tvFile, $newTvFileName, 'public');
+      #endregion
+
+      $url = $this->tvSubFolderName . "/" . $newTvFileName;
+    }
+    
     // 视频封面图上传保存
     $imageFile = $request->file('image');
-    $newImageFileName = UUID::generate()->string . '.' . $imageFile->extension();
+    $newImageFileName = UUID::generate()->string . '.' . $imageFile->getClientOriginalExtension();
     #region 保存到本地
       //$imageFile->move(public_path(). '/' . $this->coverImagesSubFolderName,$newImageFileName);
     #endregion
@@ -89,7 +99,7 @@ class TvProgrameController extends Controller
       'shortContent' => $request->shortContent,
       'content' => $request->content,
       'image' => $this->coverImagesSubFolderName . "/" . $newImageFileName,
-      "url" => $this->tvSubFolderName . "/" . $newTvFileName,
+      "url" => $url,
       "date" => $request->date,
       "isChecked" => true,
       "isPublished" => true,
@@ -112,9 +122,18 @@ class TvProgrameController extends Controller
     // 暂存本次操作的频道名, 用于显示返回显示列表时定位到最近操作的频道
     $request->session()->flash('currentChannel', TvPrograme::find($id)->tvChannel->id);
 
+    $item = TvPrograme::find($id);
+    $youtubeLink = "";
+    if($this->isYoutubeLink($item->url))
+    {
+      $youtubeLink = "https://www.youtube.com/embed/" .  str_replace("https://www.youtube.com/watch?v=", "", $item->url) .  "?autoplay=1&rel=0";
+    }
+
     return view('tv-programe.show',
     ['viewBag' => $this->viewBag,
-    'item'=>TvPrograme::find($id), 
+    'item'=>$item, 
+    'isYoutubeLink' => $this->isYoutubeLink($item->url),
+    'youtubeLink' => $youtubeLink, 
     'currentFunction' => 'TvPrograme',
     'resourceUrlPrefix' => $this->generalAwsResourceUrlPrefix,
     ]);
@@ -167,5 +186,12 @@ class TvProgrameController extends Controller
     
     TvPrograme::destroy($id);
     return redirect()->action('TvProgrameController@index');
+  }
+
+  public function isYoutubeLink(string $linkAddr)
+  {
+    return strpos(
+      $linkAddr, 
+      "https://www.youtube.com/watch?v=") === 0;
   }
 }

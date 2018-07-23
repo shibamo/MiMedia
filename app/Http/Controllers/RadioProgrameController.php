@@ -46,14 +46,14 @@ class RadioProgrameController extends Controller
   public function store(Request $request)
   {
     $radioFile = $request->file('radio');
-    $newRadioFileName = UUID::generate()->string . '.' . $radioFile->extension();
+    $newRadioFileName = UUID::generate()->string . '.' . $radioFile->getClientOriginalExtension();
 
     #region 保存到S3
     Storage::disk('s3')->putFileAs($this->radioSubFolderName, $radioFile, $newRadioFileName, 'public');
     #endregion
 
     $imageFile = $request->file('image');
-    $newImageFileName = UUID::generate()->string . '.' . $imageFile->extension();
+    $newImageFileName = UUID::generate()->string . '.' . $imageFile->getClientOriginalExtension();
 
     #region 保存到S3
     Storage::disk('s3')->putFileAs($this->coverImagesSubFolderName, $imageFile, $newImageFileName, 'public');

@@ -54,12 +54,19 @@
       </div>
     </div>
 
-
-    <div class="form-group{{ $errors->has('tv') ? ' has-error' : '' }}">
-      {{Form::label('tv', '* video(mp4)', ['class' => 'col-md-2 control-label'])}}
+    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+      {{Form::label('name', 'Youtube link', ['class' => 'col-md-2 control-label'])}}
 
       <div class="col-md-10">
-        {{Form::file('tv', null, ['placeholder' => 'Choose ...', 'class' => 'form-control','required' =>"true", 'id'=>'tv'])}}
+        {{Form::text('youtubeLink', null, ['placeholder' => 'Enter Youtube link (https://www.youtube.com/watch?v=******)...', 'class' => 'form-control','id'=>'youtubeLink'])}}
+      </div>
+    </div>   
+
+    <div class="form-group{{ $errors->has('tv') ? ' has-error' : '' }}">
+      {{Form::label('tv', 'video(mp4)', ['class' => 'col-md-2 control-label'])}}
+
+      <div class="col-md-10">
+        {{Form::file('tv', null, ['placeholder' => 'Choose ...', 'class' => 'form-control', 'id'=>'tv'])}}
       </div>
     </div>
 
@@ -85,10 +92,14 @@
           continueInvoke = false; 
       } 
 
+      var youtubeLinkVal = $('#youtubeLink').val(); 
+      var isYoutubeLinkValid = youtubeLinkVal.startsWith("https://www.youtube.com/watch?v=");
+
       var tvVal = $('#tv').val(); 
-      if(tvVal=='') 
+
+      if(!isYoutubeLinkValid && tvVal=='') 
       { 
-          alert("Need video"); 
+          alert("Need valid Youtube link(https://www.youtube.com/watch?v=******) or video file"); 
           continueInvoke = false; 
       } 
       
