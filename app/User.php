@@ -40,11 +40,11 @@ class User extends Authenticatable
       }
 
       if($this->isAuditor){
-        $this->codes = $this->codes->merge(['forum','tv','radio']); 
+        $this->codes = $this->codes->merge(['forum','tv','radio','live']); 
       }
 
       if($this->isEditor){
-        $this->codes = $this->codes->merge(['tv','radio']); 
+        $this->codes = $this->codes->merge(['tv','radio','live']); 
       }
 
       // if($this->isADManager){

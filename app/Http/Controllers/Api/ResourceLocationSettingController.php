@@ -22,6 +22,7 @@ class ResourceLocationSettingController extends ApiController
         'forumImageUrlPrefix' => $generalAwsResourceUrlPrefix,
         'tvVideoUrlPrefix' => $generalAwsResourceUrlPrefix,
         'tvImageUrlPrefix' => $generalAwsResourceUrlPrefix,
+        'liveImageUrlPrefix' => $generalAwsResourceUrlPrefix,
         'radioAudioUrlPrefix' => $generalAwsResourceUrlPrefix,
         'radioImageUrlPrefix' => $generalAwsResourceUrlPrefix,
         'boardImageUrlPrefix' => $generalAwsResourceUrlPrefix,

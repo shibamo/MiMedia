@@ -187,11 +187,4 @@ class TvProgrameController extends Controller
     TvPrograme::destroy($id);
     return redirect()->action('TvProgrameController@index');
   }
-
-  public function isYoutubeLink(string $linkAddr)
-  {
-    return strpos(
-      $linkAddr, 
-      "https://www.youtube.com/watch?v=") === 0;
-  }
 }

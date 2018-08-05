@@ -92,3 +92,8 @@ Route::get('/', function () {
 
 //广告图片管理
   Route::resource('AdSetting', 'AdSettingController');
+
+//直播节目管理
+Route::resource('LivePrograme', 'LiveProgrameController');
+//使用web页面查看直播节目(一般是微信导入)
+Route::get('LivePrograme/webview/{id}', 'LiveProgrameController@webview')->name('LivePrograme.webview'); 

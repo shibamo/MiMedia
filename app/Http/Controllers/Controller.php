@@ -49,5 +49,13 @@ class Controller extends BaseController
           return $next($request);
       });
     }
-	}  
+  }
+  
+  // Used by TV programe & Live progrome
+  public function isYoutubeLink(string $linkAddr)
+  {
+    return strpos(
+      $linkAddr, 
+      "https://www.youtube.com/watch?v=") === 0;
+  }
 }

@@ -23,3 +23,6 @@ npm-debug.log
 
 !.elasticbeanstalk/*.global.yml
 
+database/seeds/UsersTableSeeder.php
+
+database/seeds/UsersTableSeeder.php

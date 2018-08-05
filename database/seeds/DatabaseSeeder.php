@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     $this->call(ForumThreadMainsTableSeeder::class);   
     $this->call(ForumThreadRepliesTableSeeder::class);          
     $this->call(AdSettingsTableSeeder::class);   
-    
+    $this->call(LiveChannelsTableSeeder::class);
+    $this->call(LiveProgramesTableSeeder::class);
   }
 }

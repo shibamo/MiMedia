@@ -19,6 +19,12 @@
       </li>
     @endif
 
+    @if($viewBag['currentUser']->canUseFunction('live'))
+      <li class="{{ $currentFunction=='LivePrograme' ? 'active' : ''}}">
+        <a href="/LivePrograme">直播节目/Live</a>
+      </li>
+    @endif
+
     @if($viewBag['currentUser']->canUseFunction('radio'))
       <li class="{{ $currentFunction=='RadioPrograme' ? 'active' : ''}}">
         <a href="/RadioPrograme">电台节目/Radio</a>

@@ -120,9 +120,6 @@ Route::group(['middleware' => 'jwt.auth'], function()
   ]);
 #endregion
 
-
-
-
 #region 广告
   Route::get('ad-setting/index', [
     'uses' => 'Api\AdSettingController@index',
@@ -141,6 +138,18 @@ Route::group(['middleware' => 'jwt.auth'], function()
 Route::post('cv/a', [
   'uses' => 'Api\ContentVisitController@add',
   'as' => 'addContentVisit'
+]);
+#endregion
+
+#region 直播节目管理
+Route::get('live-programe/channels', [
+  'uses' => 'Api\LiveProgrameController@channels',
+  'as' => 'live-channels'
+]);
+
+Route::get('live-programe/index', [
+  'uses' => 'Api\LiveProgrameController@index',
+  'as' => 'live-programes'
 ]);
 #endregion
 
